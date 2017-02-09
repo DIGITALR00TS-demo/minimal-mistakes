@@ -5,11 +5,11 @@ install:
 - bundle install
 - gem install html-proofer
 - gem install hunspell
-addons:
-  apt:
-    packages:
-    - hunspell
-    - libhunspell-dev
+# addons:
+#   apt:
+#     packages:
+#     - hunspell
+#     - libhunspell-dev
 script:
 - jekyll doctor && jekyll build --verbose
 - hunspell --version
