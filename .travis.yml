@@ -4,15 +4,17 @@ rvm:
 install:
 - bundle install
 - gem install html-proofer
+- gem install hunspell
 addons:
   apt:
     packages:
     - hunspell
+    - libhunspell-dev
 script:
 - jekyll doctor && jekyll build --verbose
-- hunspell -v
-- hunspell -u3 -i utf-8 -d en_US -H _site/**/*.html
-- htmlproofer ./_site --allow-hash-href
+- hunspell --version
+- hunspell -u3 -d en_US -H _site/**/*.html
+- htmlproofer ./_site --check-html --allow-hash-href
 
 # branch blacklist
 branches:
