@@ -1,0 +1,27 @@
+language: ruby
+rvm:
+- 2.3.1
+install:
+- bundle install
+- gem install html-proofer
+addons:
+  apt:
+    packages:
+    - hunspell
+script:
+- jekyll doctor && jekyll build --verbose
+- hunspell -v
+- hunspell -u3 -i utf-8 -d en_US -H _site/**/*.html
+- htmlproofer ./_site --allow-hash-href
+
+# branch blacklist
+branches:
+  exclude:
+  - gh-pages     # do not test the gh-pages branch
+
+exclude: [vendor] # Travis bundles all gems in the vendor directory on its build servers, which Jekyll will mistakenly read and explode on.
+env:
+  global:
+  - NOKOGIRI_USE_SYSTEM_LIBRARIES=true # speeds up installation of html-proofer
+sudo: false # explicitly build on Travis’s container-based infrastructure
+dist: trusty
